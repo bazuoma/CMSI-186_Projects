@@ -1,0 +1,21 @@
+ 
+
+// Used to initialize start games
+public class HighRoll
+{
+    public static void main(String[] args)
+    {
+        displayInitMessage();
+        new Play();  // call play as a new instance since main is static
+    }
+
+    public HighRoll()
+    {
+    }
+
+    public static void displayInitMessage()
+    {
+        System.out.println("Hi there. Welcome to Brandon's High Roll.\nJust keep rollin' until you get the highest roll possible!\n");
+
+    }
+}
