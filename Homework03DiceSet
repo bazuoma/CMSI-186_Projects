@@ -1,0 +1,69 @@
+
+import java.util.ArrayList;
+public class DiceSet
+{
+    int [] set;
+    int nSides;
+
+    // Constructor for a set of k dice each with n-sides (k ≥ 1 and n ≥ four)
+    public DiceSet( int k, int n )
+    {
+        nSides = n;
+        set = new int [k]; // give each die a key and a value
+        for(int i = 0; i < set.length; i++)
+        {
+            set[i] = ( i % ( n-1 ) ) + 1;
+        }
+    }
+
+    // Returns the present sum of this set of dice
+    public int sum()
+    {
+        int value = 0;
+        for(int i = 0; i < set.length; i++)
+        {
+            value += set[i];
+        }
+        return value;
+    }
+
+    // Randomly rolls all of the dice in this set; returns void since it just sets the values
+    public void roll()
+    {
+        for(int i = 0; i < set.length; i++)
+        {
+            set[i] = (int)(Math.random() * nSides + 1);
+        }
+    }
+
+    // Randomly rolls only the ith die in this set [indexed from zero]
+    public void rollIndividual( int i )
+    {
+        set[i] = (int)(Math.random() * nSides + 1);
+    }
+
+    // Gets the value of the ith die in this set
+    public int getIndividual( int i )
+    {
+        return set[i];
+    }
+
+    // Sets the ith die in this set to the value of jValue
+    public void setIndividual( int i, int jValue )
+    {
+        set[i] = jValue;
+    }
+
+    // Returns a string representation of this set of dice, e.g., "[3][9][12][4]"
+    public String toString()
+    {
+        String sSet = "";
+        for(int i = 0; i < set.length; i++)
+        {
+            sSet += "[" + Integer.toString(set[i]) + "]";
+        }
+        return sSet;
+    }
+
+}
+
