@@ -1,0 +1,29 @@
+
+public class Die
+{
+    public int value;
+    public int dice;
+
+    public Die( int nSides )
+    {
+        dice = nSides;
+    }
+
+    // Returns a value as a result of randomly rolling this die
+    public void roll()
+    {
+        value = (int)(Math.random() * dice + 1);
+    }
+
+    // Returns the current value of this die which resulted from the last roll
+    public int getValue()
+    {
+        return value;
+    }
+
+    // Sets the value of this die to kValue
+    public void setValue( int kValue )
+    {
+        dice = value;
+    }
+}
