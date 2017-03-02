@@ -1,0 +1,218 @@
+ 
+
+import java.util.Scanner;
+
+// game play implementation
+public class Play
+{
+
+
+    public DiceSet set;       // declare a set of dice
+    public int nDie, nSides;  // create variables for the number of dice and sides
+    private int[] dieInHand;    // store die in array
+
+    public Play()
+    {
+        boolean playing = false;
+        while(!playing)
+        {
+            boolean isValid = false;
+            while(!isValid)
+            {
+                // get the number of dice and sides
+                System.out.print("How many dice would you like to play with?\nDie: ");
+                Scanner sc = new Scanner(System.in);
+                nDie = sc.nextInt();
+                System.out.print("How many sides would you like on each dice?\nSides: ");
+                nSides = sc.nextInt();
+
+                if(nDie >= 1) // check if dice count and side count is valid
+                {
+                    if(nSides >= 4)
+                    {
+                        System.out.println("Ok you're all set. Let's play!\n");
+                        break;
+                    }
+                    System.out.println("The number of sides you entered is invalid.\nTry a number greater than or equal to 4.");
+                }
+                else
+                {
+                    if(nSides >= 4)
+                    {
+                        System.out.println("The number of dice you entered is invalid.\nTry a number greater than or equal to 1.");
+                    }
+                    System.out.println("The number of dice you entered is invalid.\nTry a number greater than or equal to 1.");
+                    System.out.println("&");
+                    System.out.println("The number of sides you entered is invalid.\nTry a number greater than or equal to 4.");
+                }
+            }
+
+            set = new DiceSet(nDie, nSides);
+            dieInHand = new int[nDie];
+            initDie();
+
+            Scanner sc = new Scanner(System.in);
+            if(!turn(set, dieInHand)) // if the hand returns false (therefore the player has won), then
+            {                         // ask if they want to keep playing
+                System.out.println("Would you like to keep playing? (y|n)");
+                String decision = sc.next();
+                if(!decision.toLowerCase().equals("y"))
+                {
+                    quit();
+                }
+            }
+        }
+    }
+
+    public void initDie()  // get a set of die
+    {
+        for(int i = 0; i < nDie; i++)
+        {
+            dieInHand[i] = 0;
+        }
+    }
+
+    private boolean turn(DiceSet set, int[] dieInHand) // player's turn
+    {
+        Scanner sc = new Scanner(System.in);
+        String input;
+
+        boolean done = false;
+        int rollCount = 0;
+        while(!done)
+        {
+            if(rollCount == 0)  // ALWAYS ROLL ALL DIE TO START
+            {
+                set.roll();
+                System.out.println("Roll - " + set.toString());
+
+                if(hasHighestRoll(set))
+                {
+                    System.out.println("You have the highest roll possible! You win on the first turn!");
+                    return false;
+                }
+                else
+                {
+                    System.out.println("Enter the values of the die you would like to keep (ex. 3 1 3)\nEnter  0 to RE-ROLL ALL die\nEnter -1 to KEEP ALL die");
+                }
+            }
+            else  // SHOULD ROLL ONLY THE DIE THAT DO NOT HAVE THE SAME VALUES AS WHAT ARE IN HAND
+            {
+                roll(set, dieInHand);
+                System.out.println("Roll - " + set.toString());
+
+                if(hasHighestRoll(set))
+                {
+                    System.out.println("You have the highest roll possible! You win!");
+                    return false;
+                }
+                else
+                {
+                    System.out.println("Enter die you want to keep\n0 to RE-ROLL ALL\n-1 to KEEP ALL");
+                }
+            }
+
+            input = sc.nextLine();
+
+            // see what the player wants to keep (if anything)
+ 
+            if(!convertMove(set, dieInHand, input))  // if illegal input
+            {
+                for(int i = 0; i < dieInHand.length; i++) // keep the current roll
+                {
+                    dieInHand[i] = set.getIndividual(i);
+                }
+            }
+            rollCount++;
+        }
+        return true;
+    }
+
+    private boolean hasHighestRoll(DiceSet set)  // see if the current dice are the highest available roll
+    {
+        int nHighestDie = 0;
+        for(int i = 0; i < nDie ;i++)
+        {
+            if(set.getIndividual(i) == nSides)
+            {
+                nHighestDie++;
+            }
+        }
+
+        if(nHighestDie == nDie)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean diceIsLegal(int dice, int index) // is the dice actually in your set?
+    {
+        return set.getIndividual(index) == dice; // this will still return a true or false
+    }
+
+    // if the roll is legal do it and return true, otherwise return false
+    private boolean convertMove(DiceSet set, int[] dieInHand, String input)
+    {
+        if(input.toLowerCase().equals("q"))
+        {
+            quit();
+        }
+        else if(input.trim().equals("0")) // ROLL ALL AGAIN
+        {
+            initDie();
+        }
+        else if(input.trim().equals("-1") || input.toLowerCase().equals("") || input.toLowerCase().equals("\\s+"))  // KEEP ALL
+        {
+            return false;
+        }
+        else   // PLAYER KEPT SOME
+        {
+            String[] splitArray = input.split("\\s+");  // array of the dice as strings
+            if(splitArray.length <= nDie)
+            {
+                initDie();
+                for (String aSplitArray : splitArray)
+                {
+                    int dice = Integer.parseInt(aSplitArray.trim()); // convert dice strings to int
+
+                    for (int j = 0; j < nDie && dice <= nSides; j++)  // put the dice into dieInHand[]
+                    {
+                        if (dieInHand[j] == 0 && dieInHand[nDie - 1] == 0 && diceIsLegal(dice, j))
+                        {
+                            dieInHand[j] = dice;
+                            break;
+                        }
+     
+                    }
+                }
+            }
+            else
+            {
+                System.out.println("You entered too many die.");
+                return false;
+            }
+
+        }
+
+        return true; 
+    }
+
+
+    private void roll(DiceSet set, int[] dieInHand)
+    {
+        for(int i = 0; i < nDie; i++)
+        {
+            if(dieInHand[i] != set.getIndividual(i))
+            {
+                set.rollIndividual(i);
+            }
+        }
+    }
+
+    private void quit()
+    {
+        System.out.println("Goodbye!");
+        System.exit(0);
+    }
+}
