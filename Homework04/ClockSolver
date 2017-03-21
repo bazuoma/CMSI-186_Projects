@@ -1,0 +1,58 @@
+/** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *  File name     :  ClockSolver.java
+ *  Purpose       :  The main program for the ClockSolver class
+ *  @see
+ *  @author       :  Brandon Azuoma
+ *  Date written  :  2017-03-19
+ *  Description   :  This class provides the main method to run the Clock methods. 
+  *
+ *  Notes         :  None right now.  I'll add some as they occur.
+ *  Warnings      :  None
+ *  Exceptions    :  
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+import java.util.*;
+public class ClockSolver {
+
+   private final double MAX_TIME_SLICE_IN_SECONDS  = 1800.00;
+   private final double DEFAULT_TIME_SLICE_SECONDS = 60.0;
+   private final double EPSILON_VALUE              = 0.1;      // small value for double-precision comparisons
+
+
+   public static void main( String args[] ) 
+   {
+     Scanner scan = new Scanner(System.in);
+      System.out.println("Please enter an angle (0 to 360): ");
+      double userangle = scan.nextDouble();
+      if (userangle < 0 || userangle > 360){
+        System.out.println("The angle has to be within 0 and 360");
+      }
+      Scanner scans = new Scanner(System.in);
+      System.out.println("Please enter a time split (enter 0 if you don't have a time split): ");
+      double timeSplit = scans.nextDouble();
+      if (timeSplit < 0 || timeSplit > 1800){
+        System.out.println("Please enter a valid time split");
+      }
+      if (timeSplit == 0){
+        System.out.println("Setting the time split to 60 seconds");
+        timeSplit = 60;
+      }
+
+      double time = 0;
+      Clock clock = new Clock(0,0,0);
+      System.out.println("The clock's hands are at " + userangle + " degrees at these times:" );
+      while (time <= 43200){
+        if ( (clock.getHandAngle(clock.getHourHandAngle(), clock.getMinuteHandAngle()) > (userangle - clock.getdelta(timeSplit)) ) && (clock.getHandAngle(clock.getHourHandAngle(), clock.getMinuteHandAngle()) < (userangle + clock.getdelta(timeSplit))))
+        {
+          System.out.println(clock.toString());
+          clock.tick(timeSplit);
+          time = time + timeSplit;
+        }
+        else{
+          clock.tick(timeSplit);
+          time = time + timeSplit;
+        }
+      }
+      System.out.println(clock.toString());
+   }
+}
