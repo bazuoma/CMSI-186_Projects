@@ -1,0 +1,262 @@
+import java.util.*;
+import java.lang.*;
+import java.text.*;
+public class Position 
+{
+    public double n = 0;
+    public double m = 0;
+    public double angle; 
+    public SoccerBall ball;
+    double speed;
+
+    public Position(double a, double b) 
+    {
+        n = a;
+        m = b;
+    }
+
+    public void setOriginalPosition(double n, double m)
+    {
+        Random rand = new Random();
+        n = rand.nextInt(80) + 1;
+        m = rand.nextInt(120) + 1;
+
+        this.n = n;
+        this.m = m;
+    }
+
+    Position getOriginalPosition()
+    {
+        Position position = new Position(n, m);
+        return position; 
+    }
+
+    public String generalDirection()
+    {
+        if (angle <= 90)
+        {
+            return "Up Right";
+        }
+        else if (angle > 90 && angle <=180)
+        {
+            return "Up Left";
+        }
+        else if (angle > 180 && angle <=270)
+        {
+            return "Down Left";
+        }
+        else 
+        {
+            return "Down Right";
+        }
+    }
+    // method for moving the balls 
+    //assuming they're all moving at a constant rate 
+    public Position[] ballMovement(double seconds, double angle) 
+    {
+        Position[] spot = new Position[10];
+        NumberFormat formatter = new DecimalFormat("#0.00");     
+
+        for (int a = 0; a < seconds; a++)
+        {
+            switch(generalDirection())
+            {
+                case "Up Right":
+                {
+
+                    for (int i = 0; i < seconds; i++)
+                    {
+                        if (angle == 90)
+                        {
+                            getOriginalPosition().n = n;
+                            getOriginalPosition().m = m + 1;
+                        }
+                        else if (angle == 45)
+                        {
+                            getOriginalPosition().n = n + 1;
+                            getOriginalPosition().m = m + 1;
+                        }
+                        else if (angle == 60)
+                        {
+                            getOriginalPosition().n = n + 1;
+                            getOriginalPosition().m = m + (1 / Math.sqrt(3));
+                        }
+                        else if (angle == 30)
+                        {
+                            getOriginalPosition().n = n + 1;
+                            getOriginalPosition().m = m + (Math.sqrt(3));
+                        }
+                        else if (angle == 0)
+                        {
+                            getOriginalPosition().n = n + 1;
+                            getOriginalPosition().m = m;
+                        }
+                        else
+                        {
+                            double tan = Math.tan(Math.toRadians(angle));
+                            getOriginalPosition().n = n + 1; 
+                            getOriginalPosition().m = m + tan;
+                        }
+
+                        for(int j=0; j < spot.length; j++)
+                        {
+                            spot[i] = new Position(n,m);
+                        }
+
+                        System.out.println(spot);
+                        System.out.println("The position of the ball at second #" + (i + 1) + " " + formatter.format(n) + ", " + formatter.format(m));
+
+                    }
+                    break;
+                }
+
+                case "Up Left":
+                {
+
+                    for (int i = 0; i < seconds; i++)
+                    {
+                        if (angle == 90)
+                        {
+                            getOriginalPosition().n = n;
+                            getOriginalPosition().m = m + 1;
+                        }
+                        else if (angle ==135)
+                        {
+                            getOriginalPosition().n = n - 1;
+                            getOriginalPosition().m = m + 1;
+                        }
+                        else if (angle == 120)
+                        {
+                            getOriginalPosition().n = n - 1;
+                            getOriginalPosition().m = m + (1 / Math.sqrt(3));
+                        }
+                        else if (angle == 150)
+                        {
+                            getOriginalPosition().n = n - 1;
+                            getOriginalPosition().m = m + (Math.sqrt(3));
+                        }
+                        else if (angle == 180)
+                        {
+                            getOriginalPosition().n = n - 1;
+                            getOriginalPosition().m = m;
+                        }
+                        else
+                        {
+                            double tan = Math.tan(Math.toRadians(angle));
+                            getOriginalPosition().n = n - 1; 
+                            getOriginalPosition().m = m + tan;
+                        }
+
+                        for(int j=0; j < spot.length; j++)
+                        {
+                            spot[i] = new Position(n,m);
+                        }
+
+                        System.out.println(spot);
+                        System.out.println("The position of the ball at second #" + (i + 1) + " " + formatter.format(n) + ", " + formatter.format(m));
+
+                    }
+                    break;
+                }
+
+                case "Down Left":
+                {
+
+                    for (int i = 0; i < seconds; i++)
+                    {
+                        if (angle == 270)
+                        {
+                            getOriginalPosition().n = n;
+                            getOriginalPosition().m = m - 1;
+                        }
+                        else if (angle == 225)
+                        {
+                            getOriginalPosition().n = n - 1;
+                            getOriginalPosition().m = m - 1;
+                        }
+                        else if (angle == 240)
+                        {
+                            getOriginalPosition().n = n - 1;
+                            getOriginalPosition().m = m - (1 / Math.sqrt(3));
+                        }
+                        else if (angle == 210)
+                        {
+                            getOriginalPosition().n = n - 1;
+                            getOriginalPosition().m = m - (Math.sqrt(3));
+                        }
+                        else
+                        {
+                            double tan = Math.tan(Math.toRadians(angle));
+                            getOriginalPosition().n = n - 1; 
+                            getOriginalPosition().m = m - tan;
+                        }
+
+                        for(int j=0; j < spot.length; j++)
+                        {
+                            spot[i] = new Position(n,m);
+                        }
+
+                        System.out.println(spot);
+                        System.out.println("The position of the ball at second #" + (i + 1) + " " + formatter.format(n) + ", " + formatter.format(m));
+
+                    }
+                    break;
+                }
+
+                case "Down Right":
+                {
+
+                    for (int i = 0; i < seconds; i++)
+                    {
+                        if (angle == 270)
+                        {
+                            getOriginalPosition().n = n;
+                            getOriginalPosition().m = m - 1;
+                        }
+                        else if (angle == 315)
+                        {
+                            getOriginalPosition().n = n + 1;
+                            getOriginalPosition().m = m - 1;
+                        }
+                        else if (angle == 300)
+                        {
+                            getOriginalPosition().n = n + 1;
+                            getOriginalPosition().m = m - (1 / Math.sqrt(3));
+                        }
+                        else if (angle == 330)
+                        {
+                            getOriginalPosition().n = n + 1;
+                            getOriginalPosition().m = m - (Math.sqrt(3));
+                        }
+                        else if (angle == 360)
+                        {
+                            getOriginalPosition().n = n + 1;
+                            getOriginalPosition().m = m;
+                        }
+                        else
+                        {
+                            double tan = Math.tan(Math.toRadians(angle));
+                            getOriginalPosition().n = n + 1; 
+                            getOriginalPosition().m = m - tan;
+                        }
+
+                        for(int j = 0; j < spot.length; j++)
+                        {
+                            spot[i] = new Position(n,m);
+                        }
+
+                        System.out.println(spot);
+                        System.out.println("The position of ball at second #" + (i + 1) + " " + formatter.format(n) + ", " + formatter.format(m));
+
+                    }
+                    break;
+                }
+
+            } 
+        } 
+        return spot;
+    }
+
+
+    
+}
