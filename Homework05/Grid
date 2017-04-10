@@ -1,0 +1,54 @@
+public class Grid
+{
+    public static void main (String []args)
+    {
+        //make a field as a grid
+        String[][] field = new String [2880][4320];
+        for (int r = 0; r < field.length; r++)
+        {
+            for (int c = 0; c <field.length;c++)
+            {
+                //System.out.print (field[r][c] + " | ");
+            }
+            //System.out.println();
+        }
+
+    }
+   
+    public static void initGrid()
+    {
+        char fill = '*';
+        for(int i = 0; i < field.length; i++)
+        {
+            for(int j = 0; j < field[0].length; j++)
+            {
+                field[i][j] = fill;
+            }
+        }
+    }
+    
+    public static void plotPoint(int X, int Y)
+    {
+        field[X][Y] = Position.getOriginalPosition();
+    }
+
+    public boolean doTheyTouch (Position spot, double angle, double speed)
+    {
+        SoccerBall []copy = SoccerBall.makeBalls();
+
+        for (int i = 0; i < copy.length; i++) 
+        {
+            for (int k = i + 1; copy.length; k++) 
+            {
+                if (copy[i] == copy[k]) 
+                {
+                    return true;
+                    System.out.println("The balls touch at second: " + (i + 1));
+                }
+            }
+        }
+
+        return false;
+        System.out.println("Given the elements of the simulation, the balls will not touch");
+    }
+}
