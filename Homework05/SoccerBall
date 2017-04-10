@@ -1,0 +1,26 @@
+import java.util.*;
+import java.lang.*;
+public class SoccerBall
+{    
+    public Position position;
+    double angle; 
+    double speed;
+    int balls;
+    double seconds = 10;
+    
+    Scanner scan = new Scanner (System.in);
+    public static void main (String []args)
+    {
+        int balls;
+        double angle;
+        double speed; 
+    }
+    
+    public SoccerBall (Position spot, double angle, double speed)
+    {
+        this.position = spot;
+        this.angle = angle;
+        this.speed = speed; 
+    }
+
+}
