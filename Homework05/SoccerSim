@@ -1,0 +1,70 @@
+import java.util.*;
+public class SoccerSim
+{
+    public Position position;
+    public SoccerBall ball;
+    public double angle;
+    public double speed;
+    public SoccerSim(SoccerBall ball)
+    {
+        this.position = spot;
+        this.angle = angle;
+        this.speed = speed;
+    }
+    public void main (String []args)
+    {
+        Scanner scan = new Scanner (System.in);
+
+        int balls;
+        double angle;
+        double speed; 
+        
+        System.out.println("How many balls do you want? ");
+        balls = scan.nextInt();
+        SoccerSim[] ballArray = new SoccerSim [balls];
+        for (int i = 0; i < balls; i++)
+        {
+            System.out.println("What direction do you want ball #" + (i + 1) + " to go (as an angle)");
+            angle = scan.nextInt();
+            
+            if (angle < 0 || angle > 360)
+            {
+                System.out.println("Pick a number between 0 and 360");
+            }
+
+            System.out.println("How fast do you want ball #" + (i + 1) + " to go (in mph and limit is 131)");
+            speed = scan.nextInt();
+            
+            if (speed < 0 || speed > 131)
+            {
+                System.out.println("Pick a number between 0 and 131");
+            }       
+
+            
+            //make new ball
+            SoccerBall ball = new SoccerBall (position, angle, speed);
+            ballArray[i] = ball;
+        }
+        
+      
+        SoccerSim[] copy = new SoccerSim [ballArray.length];
+        System.arraycopy(ballArray, 0, copy, 0, ballArray.length);
+
+        for (int i = 0; i < copy.length; i++) 
+        {
+            for (int k = i + 1; copy.length; k++) 
+            {
+                if (copy[i] == copy[k]) 
+                {
+                    return true;
+                    System.out.println("The balls touch at second: " + (i + 1));
+                }
+            }
+        }
+
+        return false;
+        System.out.println("Given the elements of the simulation, the balls will not touch");
+    }
+
+}
+
