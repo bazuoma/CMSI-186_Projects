@@ -1,0 +1,151 @@
+import java.util.*;
+
+public class CoinMethod
+{
+    public static int minCoins(int coins[], int coinLength, int value)
+    {
+        int answer = Integer.MAX_VALUE;
+        if (value == 0) 
+        {
+            return 0;
+        }
+        
+        for (int i=0; i < coinLength; i++)
+        {
+            if (coins[i] <= value)
+            {
+                int temp = minCoins(coins, coinLength,value-coins[i]);
+
+                if (temp != Integer.MAX_VALUE && temp + 1 < answer)
+                {
+                    answer = temp + 1;
+                }
+            }
+        }
+        return answer;
+    }
+
+    public static ArrayList<Coin> whichCoins(int[] coins, int value)
+    {
+        int n = coins.length;
+        int[] count = new int [value+ 1];
+        int[] otherNum = new int [value+ 1];
+        count[0] = 1;
+        
+        for (int i = 0 ; i < value; i++)
+        {
+            if (count[i] > 0)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    int y = i + coins[j];
+                    
+                    if (y <=value)
+                    {
+                        if (count[y] == 0 || count[y] > count[i] + 1)
+                        {
+                            count[y] = count[i] + 1;
+                            otherNum[y] = j;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (count[value] == 0)
+        {
+            return null;
+        }
+
+        int[] answer = new int[count[value] - 1];
+        int b = value;
+        while (b > 0)
+        {
+            answer[count[b] - 2] = coins[otherNum[b]];
+            b = b - coins[otherNum[b]];
+        }
+
+        ArrayList<Coin> coinList = new ArrayList<Coin> ();
+        int x = 1; 
+        for (int i = 0; i < answer.length; i++) 
+        {
+            for (int t = i + 1; t < answer.length; t++) 
+            {
+                if (answer[i] == answer[t]) 
+                {
+                    x++;
+                }
+            }
+            Coin coin = new Coin (answer[i], x);
+            coinList.add(coin);
+            x = 1;
+        }
+        return coinList;
+    }
+
+    public static void main(String args[])
+    {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the number of coins in the argument (must be more than 2 coins)");
+        int n = scan.nextInt();
+
+        if(n <= 2)
+        {
+            while(n <= 2)
+            {
+                System.out.println("BAD DATA\n Must be more than 2 (will repeat until you pick another number)");
+                n = scan.nextInt();
+            }
+        }
+
+        int [] coins = new int [n];
+        for(int i = 0; i < n; i++)
+        {
+            System.out.println("Enter the value for coin #" + (i + 1) );
+            int x = scan.nextInt();
+            if(x < 1)
+            {
+                while (x < 1)
+                {
+                    System.out.println("BAD DATA\n Value of coin must be positive. Try again: ");
+                    x = scan.nextInt();
+                }
+            }
+            coins[i] = x;
+        }
+
+        for (int i = 0; i < coins.length; i++) 
+        {
+            for (int k = i + 1; k < coins.length; k++) 
+            {
+                if (coins[i] == coins[k]) 
+                {
+                    System.out.println("Coin #" + (i + 1) + "is duplicated, pick a new value for coin # " + (k + 1));
+                    coins[k] = scan.nextInt(); 
+                }
+            }
+        }
+
+        int coinLength = coins.length;
+        System.out.println("What is the total value of change?");
+        int value = scan.nextInt();
+        for (int i = 0; i < coins.length; i++)
+        {
+            if (coins[i] >= value)
+            {
+                while (coins[i] >= value)
+                {
+                    System.out.println("Value of change must be larger than value of coins. Input new value: ");
+                    value = scan.nextInt();
+                }
+            }
+        }
+
+        int answer = minCoins(coins, coinLength,value);
+        System.out.println("Minimum coins required is " + minCoins(coins, coinLength,value) + " and the coins used were\n ");
+        for(Coin coin: whichCoins(coins, value)) 
+        {
+            System.out.println(coin); 
+        }
+    }
+}
