@@ -1,0 +1,43 @@
+public class Coin  
+{
+
+    private int value;
+    private int occurence;
+
+    public Coin() 
+    {
+        this.value = -1;
+        this.occurence = -1;
+    }
+
+    public Coin(int nValue, int nOccurence) 
+    {
+        this.value = nValue;
+        this.occurence = nOccurence;
+    }
+
+    public void setCoinValue(int newValue) 
+    {
+        this.value = newValue;
+    }
+
+    public void setOccurence(int newOccurence) 
+    {
+        this.occurence = newOccurence;
+    }
+
+    public int getValue() 
+    {
+        return value;
+    }
+
+    public int getOccurence() 
+    {
+        return occurence;
+    }
+
+    public String toString() 
+    {
+        return ("The "+ this.getValue() + " cent coin x "+ this.getOccurence() );
+    }
+}
