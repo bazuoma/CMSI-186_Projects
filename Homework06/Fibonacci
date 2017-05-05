@@ -1,0 +1,18 @@
+import java.util.*;
+public class Fibonacci 
+{
+    public static void main(String args[])
+    {
+        Scanner scan = new Scanner (System.in);
+        System.out.println("What is the value that you want to use Fibonacci's formula for?");
+        int val = scan.nextInt();
+        int[] Fibonacci = new int[val];
+        Fibonacci[0] = 0;
+        Fibonacci[1] = 1;
+        for(int i=2; i < val; i++)
+        {
+            Fibonacci[i] = Fibonacci[i-1] + Fibonacci[i-2];
+        }
+        System.out.print(Fibonacci[val - 1]);
+    }
+}
