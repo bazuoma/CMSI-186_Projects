@@ -1,0 +1,209 @@
+import java.util.*;
+import java.text.*;
+import java.math.*;
+
+public class GinormousInt 
+{
+    public static void main(String [] args)
+    {
+        boolean quit = false;
+        while(!quit)
+        {
+            System.out.println("We are creating a computer generated large random integer.\nWhat would you like to do? Type the number of your choice or type q to quit.");
+            System.out.println("1. Add an argument to value");
+            System.out.println("2. Subtract an argument from value");
+            System.out.println("3. Multiply value by argument");
+            System.out.println("4. Divide value by the argument");
+            System.out.println("5. Compare value to the argument");
+            System.out.print("Number: ");
+
+            Scanner sc = new Scanner(System.in);
+            String input = sc.next();
+
+            String value = "";
+            Random rand = new Random();
+
+            int  n = rand.nextInt(Integer.MAX_VALUE - 2000) + 2000;
+            value = Integer.toString(n);
+            
+
+            if(input.equals("q"))
+            {
+                quit = true;
+                break;
+            }
+
+            switch(input)
+            {
+                case "1":
+                {
+                    add(value);
+                    break;
+                }
+                case "2":
+                {
+                    subtract(value);
+                    break;
+                }
+                case "3":
+                {
+                    multiply(value);
+                    break;
+                }
+                case "4":
+                {
+                    divide(value);
+                    break;
+                }
+                case "5":
+                {
+                    remainder(value);
+                    break;
+                }
+                default:
+                {
+                    System.out.println("Sorry. Your input could not be understood. Try entering a number 1 through 5.\n");
+                    break;
+                }
+            }
+        }
+    }
+
+    public GinormousInt( String value )
+    {
+        this.value = value;
+    }
+    // mimics one of the several java.math.BigInteger constructors
+
+    public GinormousInt add( GinormousInt value )
+    {
+        Integer.parseInt(value);
+        System.out.println("What is your ginormous number? (must be larger than 2,000): ");
+        Scanner scan = Scanner (System.in);
+        int x = scan.nextInt();
+        while(x < 2000)
+        {
+            if (x < 2000)
+            {
+                System.out.println("Number isn't big enough, try again: ");
+                x = scan.nextInt();
+            }
+        }
+        newValue = value + x;
+    }
+    // returns a GinormousInt whose value is the sum of this plus the argument
+
+    public GinormousInt subtract( GinormousInt value )
+    {
+        Integer.parseInt(value);
+        System.out.println("What is your ginormous number? (must be larger than 2,000): ");
+        Scanner scan = Scanner (System.in);
+        int x = scan.nextInt();
+        while (x < 2000)
+        {
+            if (x < 2000)
+            {
+                System.out.println("Number isn't big enough, try again: ");
+                x = scan.nextInt();
+            }
+        }
+        newValue = value - x;
+    }
+    // returns a GinormousInt whose value is the difference of this minus the argument
+
+    public GinormousInt multiply( GinormousInt value )
+    {
+        Integer.parseInt(value);
+        System.out.println("What is your ginormous number? (must be larger than 2,000): ");
+        Scanner scan = Scanner (System.in);
+        int x = scan.nextInt();
+        while (x < 2000)
+        {
+            if (x < 2000)
+            {
+                System.out.println("Number isn't big enough, try again: ");
+                x = scan.nextInt();
+            }
+        }
+        newValue = value * x;
+    }
+    // returns a GinormousInt whose value is the product of this times the argument
+
+    public GinormousInt divide( GinormousInt value )
+    {
+        Integer.parseInt(value);
+        System.out.println("What is your ginormous number? (must be larger than 2,000): ");
+        Scanner scan = Scanner (System.in);
+        int x = scan.nextInt();
+        while(x < 2000)
+        {
+            if (x < 2000)
+            {
+                System.out.println("Number isn't big enough, try again: ");
+                x = scan.nextInt();
+            }
+        }
+        newValue = value / x;
+    }
+    // returns a GinormousInt whose value is the quotient of this divided by the argument
+
+    public GinormousInt remainder( GinormousInt value )
+    {
+        Integer.parseInt(value);
+        System.out.println("What is your ginormous number? (must be larger than 2,000): ");
+        Scanner scan = Scanner (System.in);
+        int x = scan.nextInt();
+        while (x < 2000)
+        {
+            if (x < 2000)
+            {
+                System.out.println("Number isn't big enough, try again: ");
+                x = scan.nextInt();
+            }
+        }
+        newValue = value + x;
+    }
+    // returns a GinormousInt whose value is the remainder of this divided by the argument
+
+    public String toString()
+    {
+        Integer.parseInt(value);
+        DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
+        System.out.println(Integer.toString(df.format(value)));
+    }
+    // returns the decimal string represention of this GinormousInt
+
+    public int compareTo( GinormousInt value )
+    {
+        Integer.parseInt(value);
+        System.out.println("What is your ginormous number? (must be larger than 2,000): ");
+        Scanner scan = Scanner (System.in);
+        int x = scan.nextInt();
+        while (x < 2000)
+        {
+            if (x < 2000)
+            {
+                System.out.println("Number isn't big enough, try again: ");
+                x = scan.nextInt();
+            }
+        }
+        if (x < value)
+        {
+            return -1; 
+        }
+        else if (x = value)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1; 
+        }
+    }
+    // returns -1/0/1 as this GinormousInt is numerically less than/equal to/greater than the value passed as the argument
+
+    public static final GinormousInt ZERO;
+    public static final GinormousInt ONE;
+    public static final GinormousInt TEN;
+
+}
